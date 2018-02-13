@@ -1,0 +1,116 @@
+<!-- * Setup the `index.handlebars` to have the template that Handlebars can render onto.
+* Create a button in `index.handlebars` that will submit the user input into the database. -->
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-top margin-bottom">
+			<img src="/assets/img/title.png" class="img img-responsive" alt="Steve's Sliders" />
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 text-center margin-bottom">
+			<!-- Input field to type your burger -->
+			<div class="form-group">
+				<label for="burgerName"><h2>Create A New Burger Masterpiece</h2></label>
+				<input type="text" class="form-control" id="burgerName" placeholder="Burger Name">
+			</div>
+			<!-- Submit button -->
+			<button type="submit" class="btn btn-primary" id="btnSubmit">Create The Burger Of The Day</button>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 margin-bottom">
+			<div class="container">
+				<div class="row pos-rel">
+					<!-- menu-top image -->
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-v-padding"><img src="/assets/img/menu-top.png" class="img img-responsive" alt="" /></div>
+					<!-- List available burgers here - background is menu-mid -->
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-v-padding menu-padding all-mid" id="menu-mid">
+						<ul>
+							{{#each burgers}}
+								{{#unless devoured}}
+									<p class="menu-items">{{burger_name}}</p>
+									<button class="btn btn-warning devour" data-id="{{id}}">Move To The Menu</button>
+								{{/unless}}
+							{{/each}}
+						</ul>
+						<p class="menu-price">$5.95</p>
+					</div>
+					<!-- menu-bottom image -->
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-v-padding"><img src="/assets/img/menu-bottom.png" class="img img-responsive" alt="" /></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 margin-bottom">
+			<div class="container">
+				<div class="row pos-rel">
+					<!-- served-top image -->
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-v-padding"><img src="/assets/img/served-top.png" class="img img-responsive" alt="" /></div>
+					<!-- List served burgers here - background is served-mid -->
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-v-padding served-padding all-mid" id="served-mid">
+
+						<ul>
+							<p class="served-title text-uppercase">Daily Menu</p>
+							{{#each burgers}}
+								{{#if devoured}}
+									<p class="served-items text-uppercase">{{burger_name}}</p>
+								{{/if}}
+							{{/each}}
+						</ul>
+					</div>
+					<!-- served-bottom image -->
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-v-padding"><img src="/assets/img/served-bottom.png" class="img img-responsive" alt="" /></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<!-- Repo info | Portfolio site info -->
+		</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	console.log("Index JS has been accessed.");
+	$(function() {
+		console.log("Private function accessed.");
+		$("#btnSubmit").on("click", function(e) {
+			e.preventDefault();
+
+			console.log("Submit Button was pressed.");
+			$.ajax("/api/burgers", {
+				type: "POST",
+				data: { burgerName: $("#burgerName").val().trim() }
+			}).then(
+				function() {
+					location.reload();
+				}
+			);
+		});
+
+		$(".devour").on("click", function(e) {
+			e.preventDefault();
+
+			console.log("Delete Button was pressed.");
+			let thisID = $(this).attr("data-id");
+			$.ajax("/api/burgers/" + thisID, {
+				type: "PUT",
+				data: { id: thisID }
+			}).then(
+				function() {
+					location.reload();
+				}
+			);
+		})
+
+	});
+	// List available burgers to the menu
+	// Add a burger to the database
+	// List served burgers to the served board
+</script>

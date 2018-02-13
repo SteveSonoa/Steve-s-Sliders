@@ -1,0 +1,91 @@
+body {
+	background-color: #fff480;
+	background-image: url("/assets/img/bkgnd-yellow-wall.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.menu-items {
+	font-family: 'Schoolbell', cursive;
+	font-size: 2em;
+	color: #dcdcdc;
+	padding-top: 15px;
+}
+
+.menu-price {
+	font-family: 'Schoolbell', cursive;
+	font-size: 3.5em;
+	color: #dcdcdc;
+	font-weight: bold;
+	padding-top: 15px;
+}
+
+.served-items {
+	font-family: 'Viga', sans-serif;
+	font-size: 1em;
+	color: #7986a6;
+}
+
+.served-title {
+	font-family: 'Viga', sans-serif;
+	font-size: 2em;
+	color: #7986a6;
+}
+
+.margin-top {
+	margin-top: 15px;
+}
+
+.margin-bottom {
+	margin-bottom: 15px;
+}
+
+.no-v-padding {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+}
+
+.menu-padding {
+	padding-left: 0px;
+	padding-right: 55px;
+	padding-top: 20px;
+	text-align: center;
+}
+
+.served-padding {
+	padding-left: 0px;
+	padding-right: 55px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+.pos-rel {
+	position: relative;
+}
+
+.pos-center {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+#menu-mid {
+	background-image: url("/assets/img/menu-mid.png");
+}
+
+#served-mid {
+	background-image: url("/assets/img/served-mid.png");
+}
+
+.all-mid {
+	background-repeat: repeat-y;
+	position: relative;
+	left: 15px;
+	right: 15px;
+	max-width: 414px;
+	background-size: calc(100% - 30px) 1px;
+}
