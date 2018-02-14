@@ -12,8 +12,8 @@
 		<div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 text-center margin-bottom">
 			<!-- Input field to type your burger -->
 			<div class="form-group">
-				<label for="burgerName"><h2>Create A New Burger Masterpiece</h2></label>
-				<input type="text" class="form-control" id="burgerName" placeholder="Burger Name">
+				<label for="burger_name"><h2>Create A New Burger Masterpiece</h2></label>
+				<input type="text" class="form-control" id="burger_name" placeholder="Burger Name">
 			</div>
 			<!-- Submit button -->
 			<button type="submit" class="btn btn-primary" id="btnSubmit">Create The Burger Of The Day</button>
@@ -86,7 +86,7 @@
 			console.log("Submit Button was pressed.");
 			$.ajax("/api/burgers", {
 				type: "POST",
-				data: { burgerName: $("#burgerName").val().trim() }
+				data: { burger_name: $("#burger_name").val().trim() }
 			}).then(
 				function() {
 					location.reload();

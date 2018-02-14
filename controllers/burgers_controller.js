@@ -1,49 +1,50 @@
-// 3. Inside the `burgers_controller.js` file, import the following:
+var db = require("../models");
 
-//    * Express
-//    * `burger.js`
+// Routes
+// =============================================================
+module.exports = function(app) {
 
-// 4. Create the `router` for the app, and export the `router` at the end of your file.
-
-var express = require("express");
-
-var router = express.Router();
-
-// Import the model (burgers.js) to use its database functions.
-var burger = require("../models/burgers.js");
-
-// Create all our routes and set up logic within those routes where required.
-router.get("/", function(req, res) {
-	burger.selectAll(function(data) {
-		var burgerObject = {
-			burgers: data
-		};
-		console.log(burgerObject);
-		res.render("index", burgerObject);
-	});
-});
-
-router.post("/api/burgers", function(req, res) {
-  burger.insertOne(req.body.burgerName, function(result) {
-    // Send back the ID of the new quote
-    res.json({ id: result.insertId });
+  // GET route for getting all of the todos
+  app.get("/", function(req, res) {
+    // Add a Sequelize findAll method inside the GET route which finds all of the todos and returns them to the user as JSON.
+    db.Burger.findAll().then(function(results) {
+      var burgerObject = {
+        burgers: results
+      };
+      res.render("index", burgerObject);
+    });
   });
-});
 
-router.put("/api/burgers/:id", function(req, res) {
-  var condition = "id=" + req.params.id;
-  console.log("PUT REQUEST ACCESSED");
-  console.log(condition);
-
-  burger.updateOne({ devoured: '1' }, condition, function(result) {
-    if (result.changedRows == 0) {
-      // If no rows were changed, then the ID must not exist, so 404
-      return res.status(404).end();
-    } else {
-      res.status(200).end();
-    }
+  // GET route for getting all of the todos
+  app.get("/api/burgers", function(req, res) {
+    // Add a Sequelize findAll method inside the GET route which finds all of the todos and returns them to the user as JSON.
+    db.Burger.findAll().then(function(results) {
+      res.json(results);
+    });
   });
-});
 
-// Export routes for server.js to use.
-module.exports = router;
+  // POST route for saving a new todo. We can create a todo using the data on req.body
+  app.post("/api/burgers", function(req, res) {
+    
+    db.Burger.create({
+      burger_name: req.body.burger_name
+    }).then(function(results) {
+      res.end();
+    });
+    
+  });
+
+  // PUT route for updating todos. We can access the updated todo in req.body
+  app.put("/api/burgers/:id", function(req, res) {
+    
+    db.Burger.update({
+      devoured: true
+    }, {
+      where: { id: req.params.id }
+    
+    }).then(function(results) {
+      res.end();
+    });
+    
+  });
+};
